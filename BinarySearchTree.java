@@ -1,7 +1,7 @@
-public class BinarySearchTree 
+public class BinarySearchTree
 {
-    private class TreeNode 
-    { 
+    private class TreeNode
+    {
         private String m_key;
         private Object m_value;
         private TreeNode m_leftChild;
@@ -51,38 +51,38 @@ public class BinarySearchTree
     }
 
     TreeNode m_root;
-    
-    public BinarySearchTree() 
+
+    public BinarySearchTree()
     {
         m_root = null;
     }
- 
+
     public Object find(String key)
-    { 
-        return findRecursive(key, m_root);
+    {
+        return ((TreeNode)findRecursive(key, m_root)).getValue();
     }
 
-    public void insert(String key, Object value) 
-    {  
+    public void insert(String key, Object value)
+    {
         insertRecursive(key, value, m_root);
     }
 
-    public void delete(String key) 
-    {  
-    
+    public void delete(String key)
+    {
+
     }
-    public int height() 
-    { 
+    public int height()
+    {
         return 6;
     }
 
     private Object findRecursive(String key, TreeNode currentNode)
     {
         Object returnObj = null;
-        
+
         if(currentNode == null)
         {
-            throw new IllegalArgumentException("Key " + key + " not found"); 
+            throw new IllegalArgumentException("Key " + key + " not found");
         }
         else if(currentNode.getKey().equals(key))
         {
@@ -103,14 +103,15 @@ public class BinarySearchTree
     private TreeNode insertRecursive(String key, Object data, TreeNode currentNode)
     {
         TreeNode upDateNode = currentNode;
-        
+
         if(currentNode == null)
         {
             TreeNode newNode = new TreeNode(key, data);
             upDateNode = newNode;
-            System.out.println(newNode.getValue());
-            System.out.println(upDateNode.getValue());
-            System.out.println(m_root.getValue());
+            if(m_root == null)
+            {
+                m_root = newNode;
+            }
         }
         else if(key.equals(currentNode.getKey()))
         {
@@ -118,14 +119,16 @@ public class BinarySearchTree
         }
         else if(key.compareTo(currentNode.getKey()) < 0)
         {
+            System.out.println("LEFT");
             currentNode.setLeft(insertRecursive(key, data, currentNode.getLeft()));
         }
         else
         {
-            currentNode.setLeft(insertRecursive(key, data, currentNode.getLeft()));
-        }   
+            System.out.println("RIGHT");
+            currentNode.setRight(insertRecursive(key, data, currentNode.getRight()));
+        }
 
         return upDateNode;
-        
+
     }
 }
