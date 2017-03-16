@@ -69,8 +69,9 @@ public class BinarySearchTree
 
     public void delete(String key)
     {
-
+        deleteRecursive(key, m_root);
     }
+
     public int height()
     {
         return 6;
@@ -130,5 +131,74 @@ public class BinarySearchTree
 
         return upDateNode;
 
+    }
+
+    private TreeNode deleteRecursive(String key, TreeNode currentNode)
+    {
+        TreeNode updateNode = currentNode;
+        if(currentNode == null)
+        {
+            throw new IllegalArgumentException("Key " + key + " not found");
+        }
+        else if(key.equals(currentNode.getKey()))
+        {
+            updateNode = deleteNode(key, currentNode);
+        }
+        else if(key.compareTo(currentNode.getKey()) < 0)
+        {
+            currentNode.setLeft(deleteRecursive(key, currentNode.getLeft()));
+        }
+        else
+        {
+            currentNode.setRight(deleteRecursive(key, currentNode.getRight()));
+        }
+        return updateNode;
+    }
+
+    private TreeNode deleteNode(String key, TreeNode delNode)
+    {
+        TreeNode updateNode = null;
+
+        if(delNode.getLeft() == null && delNode.getRight() == null)
+        {
+            System.out.println(key + " no child");
+        }
+        else if(delNode.getLeft() != null && delNode.getRight() == null)
+        {
+            System.out.println(key + " left child");
+            updateNode = delNode.getLeft();
+        }
+        else if(delNode.getLeft() == null && delNode.getRight() != null)
+        {
+            System.out.println(key + " right child");
+            updateNode = delNode.getRight();
+        }
+        else
+        {
+            System.out.println(key + " 2 child");
+            updateNode = promoteSuccessor(delNode.getRight());
+        }
+
+        return updateNode;
+    }
+
+    private TreeNode promoteSuccessor(TreeNode currentNode)
+    {
+        TreeNode successor = currentNode;
+
+        if(currentNode.getLeft() == null)
+        {
+            successor = currentNode;
+        }
+        else
+        {
+            successor = promoteSuccessor(currentNode.getLeft());
+            if(currentNode.getKey().equals(successor.getLeft().getKey()))
+            {
+                currentNode.setLeft(successor.getRight());
+            }
+        }
+
+        return successor;
     }
 }

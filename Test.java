@@ -4,22 +4,45 @@ public class Test
     {
         BinarySearchTree tree = new BinarySearchTree();
 
-        String s1 = "1";
-        String s2 = "2";
-        String s3 = "3";
-        String s4 = "4";
-        String s5 = "5";
-        tree.insert("key3", s2);
-        tree.insert("key2", s3);
-        tree.insert("key4", s4);
-        tree.insert("key1", s1);
-        tree.insert("key5", s5);
-        System.out.println(tree.find("key5"));
-        System.out.println(tree.find("key1"));
-        System.out.println(tree.find("key2"));
-        System.out.println(tree.find("key4"));
-        System.out.println(tree.find("key3"));
-        System.out.println(tree.find("key5"));
+        String s10 = "10";
+        String s20 = "20";
+        String s25 = "25";
+        String s30 = "30";
+        String s35 = "35";
+        String s40 = "40";
+        String s50 = "50";
+        String s27 = "27";
+        String s33 = "33";
+        tree.insert("key30", s30);
+        tree.insert("key20", s20);
+        tree.insert("key40", s40);
+        tree.insert("key10", s10);
+        tree.insert("key50", s50);
+        tree.insert("key25", s25);
+        tree.insert("key35", s35);
+        tree.insert("key27", s27);
+        tree.insert("key33", s33);
+        System.out.println(tree.find("key50"));
+        System.out.println(tree.find("key10"));
+        System.out.println(tree.find("key20"));
+        System.out.println(tree.find("key40"));
+        System.out.println(tree.find("key30"));
+        System.out.println(tree.find("key50"));
+
+        System.out.println("======");
+
+
+        tree.delete("key40");
+        //System.out.println(tree.find("key33"));
+        //System.out.println(tree.find("key35"));
+        System.out.println(tree.find("key50"));
+        System.out.println(tree.find("key40"));
+
+        /*System.out.println(tree.find("key10"));
+        System.out.println(tree.find("key20"));
+        System.out.println(tree.find("key30"));
+        System.out.println(tree.find("key40"));
+        System.out.println(tree.find("key50"));*/
 
     }
 }
