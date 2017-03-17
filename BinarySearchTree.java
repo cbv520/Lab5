@@ -146,11 +146,11 @@ public class BinarySearchTree
         }
         else if(key.compareTo(currentNode.getKey()) < 0)
         {
-            currentNode.setLeft(deleteRecursive(key, currentNode.getLeft()));
+            updateNode.setLeft(deleteRecursive(key, currentNode.getLeft()));
         }
         else
         {
-            currentNode.setRight(deleteRecursive(key, currentNode.getRight()));
+            updateNode.setRight(deleteRecursive(key, currentNode.getRight()));
         }
         return updateNode;
     }
@@ -177,6 +177,7 @@ public class BinarySearchTree
         {
             System.out.println(key + " 2 child");
             updateNode = promoteSuccessor(delNode.getRight());
+            updateNode.setLeft(delNode.getLeft());
         }
 
         return updateNode;
@@ -188,14 +189,16 @@ public class BinarySearchTree
 
         if(currentNode.getLeft() == null)
         {
+            System.out.println("successor: " + currentNode.getKey());
             successor = currentNode;
         }
         else
         {
             successor = promoteSuccessor(currentNode.getLeft());
-            if(currentNode.getKey().equals(successor.getLeft().getKey()))
+            if(currentNode.getLeft().getKey().equals(successor.getKey())) //parent of successor prior to deletion
             {
                 currentNode.setLeft(successor.getRight());
+                successor.setRight(currentNode);
             }
         }
 
