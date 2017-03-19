@@ -177,6 +177,11 @@ public class BinarySearchTree
         {
             System.out.println(key + " 2 child");
             updateNode = promoteSuccessor(delNode.getRight());
+            updateNode.setLeft(delNode.getLeft());
+            System.out.println("delNode : " + delNode.getKey());
+            System.out.println("delNode right : " + delNode.getRight().getKey());
+            System.out.println("successor : " + updateNode.getKey());
+            System.out.println(delNode.getRight().getLeft().getKey());
         }
 
         return updateNode;
@@ -186,19 +191,39 @@ public class BinarySearchTree
     {
         TreeNode successor = currentNode;
 
-        if(currentNode.getLeft() == null)
+        if(currentNode.getLeft() != null)
         {
-            successor = currentNode;
-        }
-        else
-        {
+            System.out.println("CURRENT NODE" + currentNode.getKey());
+            System.out.println("CURRENT NODE LEFT" + currentNode.getLeft().getKey());
+            System.out.println("CURRENT NODE RIGHT" + currentNode.getRight().getKey());
             successor = promoteSuccessor(currentNode.getLeft());
-            if(currentNode.getKey().equals(successor.getLeft().getKey()))
+            if(successor.getKey().equals(currentNode.getLeft().getKey()))
             {
-                currentNode.setLeft(successor.getRight());
+                if(successor.getRight() != null)
+                {
+                    currentNode.setLeft(successor.getRight());
+                }
+                successor.setRight(currentNode);
+                //System.out.println("parent : " + currentNode.getKey());
+                //System.out.println("successor : " + successor.getKey());
             }
         }
 
         return successor;
+    }
+
+    public void test()
+    {
+        System.out.println(m_root.getKey());
+        System.out.println("==================");
+        System.out.println(m_root.getLeft().getKey());
+        System.out.println("==================");
+        System.out.println(m_root.getLeft().getLeft().getKey());
+        System.out.println(m_root.getLeft().getLeft().getLeft().getKey());
+        System.out.println(m_root.getLeft().getLeft().getRight().getKey());
+        System.out.println("==================");
+        System.out.println(m_root.getLeft().getRight().getKey());
+        System.out.println(m_root.getLeft().getRight().getLeft().getKey());
+        System.out.println(m_root.getLeft().getRight().getRight().getKey());
     }
 }

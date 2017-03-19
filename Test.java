@@ -33,6 +33,7 @@ public class Test
 
 
         tree.delete("key40");
+        //tree.delete();
         //System.out.println(tree.find("key33"));
         //System.out.println(tree.find("key35"));
         System.out.println(tree.find("key50"));
