@@ -35,7 +35,7 @@ public class BSTTestHarness
         {
             System.out.println(e.getMessage());
         }
-	    catch(Exception e)
+        catch(Exception e)
         {
             System.out.println(e.getMessage());
         }

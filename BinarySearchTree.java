@@ -216,9 +216,10 @@ public class BinarySearchTree
 
         try
         { 
-            //FileOutputStream fos = new FileOutputStream("BSTTreePrint.txt", true);
-            //PrintWriter pw = new PrintWriter(fos);
-            System.out.println(currentNode.getKey() + "," + currentNode.getValue());
+            FileOutputStream fos = new FileOutputStream("BSTTreePrint.txt", true);
+            PrintWriter pw = new PrintWriter(fos);
+            pw.println(currentNode.getKey() + "," + currentNode.getValue());
+            pw.close();
         }
         catch(Exception e)
         {
