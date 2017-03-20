@@ -35,6 +35,10 @@ public class BSTTestHarness
         {
             System.out.println(e.getMessage());
         }
+	    catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
 
         try
         {
@@ -55,6 +59,8 @@ public class BSTTestHarness
                 pw.println(tree.find(person[i].getID()));
                 
             }
+
+            pw.close();
         }
         catch(IOException e)
         {
@@ -63,6 +69,10 @@ public class BSTTestHarness
         catch(NoSuchElementException e)
         {
             System.out.println("Error finding node in BST");
+            System.out.println(e.getMessage());
+        }
+        catch(Exception e)
+        {
             System.out.println(e.getMessage());
         }
     }
