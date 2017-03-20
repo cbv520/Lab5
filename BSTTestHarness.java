@@ -6,30 +6,45 @@ public class BSTTestHarness
     public static void main(String args[])
     {
         FileInputStream fis;
-        InputStreamReader rdr;   
+        InputStreamReader rdr;
         BufferedReader br;
 
         FileOutputStream fos;
         PrintWriter pw;
 
-        Person[] person = new Person[7000];
+        String[] id = new String[7000];
         BinarySearchTree tree = new BinarySearchTree();
-        
+
+        /***********************************************
+            importing data from RandomNames7000.csv
+        ***********************************************/
         try
         {
             fis = new FileInputStream("RandomNames7000.csv");
-            rdr = new InputStreamReader(fis); 
-            br = new BufferedReader(rdr);    
+            rdr = new InputStreamReader(fis);
+            br = new BufferedReader(rdr);
 
-            for(int i = 0; i < 7000; i++)
+            int i = 0;
+            String[] entry;
+            String line = br.readLine();
+            while(line != null)
             {
-                String[] entry = br.readLine().split(",");
-                person[i] = new Person(entry[0], entry[1]);
-                tree.insert(entry[0], entry[1]);
+                entry = line.split(",");
+                try
+                {
+                    tree.insert(entry[0], entry[1]);
+                    id[i] = entry[0];
+                    i++;
+                }
+                catch(IllegalArgumentException e)
+                {
+                    System.out.println("Error: " + e.getMessage());
+                }
+                line = br.readLine();
             }
 
             fis.close();
-                
+
         }
         catch(IOException e)
         {
@@ -40,24 +55,27 @@ public class BSTTestHarness
             System.out.println(e.getMessage());
         }
 
-        try
-        {
-            tree.print();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
+        /***********************************************
+           traverse tree in-order and print key and
+           value to file BSTTreePrint.txt
+        ***********************************************/
+        tree.print();
 
+        /***********************************************
+            find all IDs in BST and print values to
+            new file BSTValueOutput.txt
+            (excludes values with a duplicate ID)
+        ***********************************************/
         try
         {
             fos = new FileOutputStream("BSTValueOutput.txt");
             pw = new PrintWriter(fos);
 
-            for(int i = 0; i < 7000; i++)
+            int i = 0;
+            while(id[i] != null)
             {
-                pw.println(tree.find(person[i].getID()));
-                
+                pw.println(tree.find(id[i]));
+                i++;
             }
 
             pw.close();
@@ -74,23 +92,6 @@ public class BSTTestHarness
         catch(Exception e)
         {
             System.out.println(e.getMessage());
-        }
-    }
-
-    private static class Person
-    {
-        String name;
-        String id;
-
-        Person(String inID, String inName)
-        {
-            id = inID;
-            name = inName;
-        }
-
-        public String getID()
-        {
-            return id;
         }
     }
 }

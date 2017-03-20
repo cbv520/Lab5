@@ -119,8 +119,7 @@ public class BinarySearchTree
         }
         else if(key.equals(currentNode.getKey()))
         {
-            System.out.println(currentNode.getKey() + "," + currentNode.getValue()
-                               + " is alread in the tree and is being replaced");
+            throw new IllegalArgumentException("key " + currentNode.getKey() + " already exists in tree");
         }
         else if(key.compareTo(currentNode.getKey()) < 0)
         {
@@ -163,6 +162,7 @@ public class BinarySearchTree
 
         if(delNode.getLeft() == null && delNode.getRight() == null)
         {
+
         }
         else if(delNode.getLeft() != null && delNode.getRight() == null)
         {
@@ -208,14 +208,13 @@ public class BinarySearchTree
 
     private void printRec(TreeNode currentNode)
     {
-
         if(currentNode.getLeft() != null)
         {
             printRec(currentNode.getLeft());
         }
 
         try
-        { 
+        {
             FileOutputStream fos = new FileOutputStream("BSTTreePrint.txt", true);
             PrintWriter pw = new PrintWriter(fos);
             pw.println(currentNode.getKey() + "," + currentNode.getValue());
