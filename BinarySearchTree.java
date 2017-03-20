@@ -1,3 +1,6 @@
+import java.util.NoSuchElementException;
+import java.io.*;
+
 public class BinarySearchTree
 {
     private class TreeNode
@@ -83,7 +86,7 @@ public class BinarySearchTree
 
         if(currentNode == null)
         {
-            throw new IllegalArgumentException("Key " + key + " not found");
+            throw new NoSuchElementException("Key " + key + " not found");
         }
         else if(currentNode.getKey().equals(key))
         {
@@ -116,16 +119,15 @@ public class BinarySearchTree
         }
         else if(key.equals(currentNode.getKey()))
         {
-
+            System.out.println(currentNode.getKey() 
+                               + " is alread in the tree and is being replaced");
         }
         else if(key.compareTo(currentNode.getKey()) < 0)
         {
-            System.out.println("LEFT");
             currentNode.setLeft(insertRecursive(key, data, currentNode.getLeft()));
         }
         else
         {
-            System.out.println("RIGHT");
             currentNode.setRight(insertRecursive(key, data, currentNode.getRight()));
         }
 
@@ -138,7 +140,7 @@ public class BinarySearchTree
         TreeNode updateNode = currentNode;
         if(currentNode == null)
         {
-            throw new IllegalArgumentException("Key " + key + " not found");
+            throw new NoSuchElementException("Key " + key + " not found");
         }
         else if(key.equals(currentNode.getKey()))
         {
@@ -161,27 +163,19 @@ public class BinarySearchTree
 
         if(delNode.getLeft() == null && delNode.getRight() == null)
         {
-            System.out.println(key + " no child");
         }
         else if(delNode.getLeft() != null && delNode.getRight() == null)
         {
-            System.out.println(key + " left child");
             updateNode = delNode.getLeft();
         }
         else if(delNode.getLeft() == null && delNode.getRight() != null)
         {
-            System.out.println(key + " right child");
             updateNode = delNode.getRight();
         }
         else
         {
-            System.out.println(key + " 2 child");
             updateNode = promoteSuccessor(delNode.getRight());
             updateNode.setLeft(delNode.getLeft());
-            System.out.println("delNode : " + delNode.getKey());
-            System.out.println("delNode right : " + delNode.getRight().getKey());
-            System.out.println("successor : " + updateNode.getKey());
-            System.out.println(delNode.getRight().getLeft().getKey());
         }
 
         return updateNode;
@@ -193,9 +187,6 @@ public class BinarySearchTree
 
         if(currentNode.getLeft() != null)
         {
-            System.out.println("CURRENT NODE" + currentNode.getKey());
-            System.out.println("CURRENT NODE LEFT" + currentNode.getLeft().getKey());
-            System.out.println("CURRENT NODE RIGHT" + currentNode.getRight().getKey());
             successor = promoteSuccessor(currentNode.getLeft());
             if(successor.getKey().equals(currentNode.getLeft().getKey()))
             {
@@ -204,26 +195,41 @@ public class BinarySearchTree
                     currentNode.setLeft(successor.getRight());
                 }
                 successor.setRight(currentNode);
-                //System.out.println("parent : " + currentNode.getKey());
-                //System.out.println("successor : " + successor.getKey());
             }
         }
 
         return successor;
     }
 
-    public void test()
+    public void print()
     {
-        System.out.println(m_root.getKey());
-        System.out.println("==================");
-        System.out.println(m_root.getLeft().getKey());
-        System.out.println("==================");
-        System.out.println(m_root.getLeft().getLeft().getKey());
-        System.out.println(m_root.getLeft().getLeft().getLeft().getKey());
-        System.out.println(m_root.getLeft().getLeft().getRight().getKey());
-        System.out.println("==================");
-        System.out.println(m_root.getLeft().getRight().getKey());
-        System.out.println(m_root.getLeft().getRight().getLeft().getKey());
-        System.out.println(m_root.getLeft().getRight().getRight().getKey());
+        printRec(m_root);
     }
+
+    private void printRec(TreeNode currentNode)
+    {
+
+        if(currentNode.getLeft() != null)
+        {
+            printRec(currentNode.getLeft());
+        }
+    
+        try
+        { 
+            FileOutputStream fos = new FileOutputStream("BSTTreePrint.txt", true);
+            PrintWriter pw = new PrintWriter(fos);
+            pw.println(currentNode.getKey() + "," + currentNode.getValue());
+        }
+        catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+        if(currentNode.getRight() != null)
+        {
+            printRec(currentNode.getRight());
+        }
+    }
+
+
 }
